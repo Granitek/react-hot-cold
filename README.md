@@ -1,4 +1,4 @@
-## This is a guessing game build on React.
+## This is a guessing game build on React.a
 
 Live Link of the App : https://hotandcoldgames.herokuapp.com/
 
