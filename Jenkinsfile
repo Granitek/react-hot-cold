@@ -18,6 +18,11 @@ agent any
                 docker image rm -f react-hot-cold
                 docker image rm -f react-hot-cold-test
                 docker image rm -f react-hot-cold-deploy
+                
+                docker stop rhc-build
+                docker container rm rhc-build
+                docker stop rhc-test
+                docker container rm rhc-test
                 '''
             }
         }
