@@ -2,7 +2,7 @@ pipeline {
 agent any
 
     environment{
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('39ff0642-d9e7-4f01-8ec9-71f7e9f0ecbc')
     }
 
     triggers {
@@ -23,6 +23,7 @@ agent any
                 docker container rm rhc-build
                 docker stop rhc-test
                 docker container rm rhc-test
+                docker stop rhc-deploy
                 '''
             }
         }
@@ -62,7 +63,7 @@ agent any
                 echo "Deploying..."
                 sh '''
                 
-                docker build -t react-hot-cold-deploy -f .Dockerfile2 .
+                docker build -t react-hot-cold-deploy -f ./Dockerfile2 .
                 docker run -p 3000:3000 -d --rm --name rhc-deploy react-hot-cold-deploy
                 '''
             }
@@ -77,8 +78,8 @@ agent any
                 
                 echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
                 NUMBER='''+ env.BUILD_NUMBER +'''
-                docker tag react-hot-cold-deploy Granitek/react-hot-cold
-                docker push Granitek/react-hot-cold
+                docker tag react-hot-cold-deploy abdialan/react-hot-cold:latest
+                docker push abdialan/react-hot-cold:latest
                 docker logout
 
                 '''
