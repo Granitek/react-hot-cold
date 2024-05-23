@@ -11,23 +11,6 @@ agent any
 
     stages {
 
-        stage('Clean up') {
-            steps {
-                echo "Cleaning..."
-                sh '''
-                docker image rm -f react-hot-cold
-                docker image rm -f react-hot-cold-test
-                docker image rm -f react-hot-cold-deploy
-                
-                docker stop rhc-build
-                docker container rm rhc-build
-                docker stop rhc-test
-                docker container rm rhc-test
-                docker stop rhc-deploy
-                '''
-            }
-        }
-
         stage('Pull'){
             steps{
                 echo "Pulling..."
@@ -78,8 +61,8 @@ agent any
                 
                 echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
                 NUMBER='''+ env.BUILD_NUMBER +'''
-                docker tag react-hot-cold-deploy abdialan/react-hot-cold:latest
-                docker push abdialan/react-hot-cold:latest
+                docker tag react-hot-cold-deploy abdialan/react-hot-cold:1.1
+                docker push abdialan/react-hot-cold:1.1
                 docker logout
 
                 '''
